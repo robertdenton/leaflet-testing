@@ -589,14 +589,27 @@
   border-right-color: #fff; }
 
 #wrapper {
-  margin: 0 auto; }
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 10px; }
   #wrapper .flexy {
-    display: flex; }
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between; }
+    #wrapper .flexy .flexy-item {
+      flex: 1 0 250px;
+      border: 1px solid black;
+      margin: 5px;
+      padding: 5px; }
 
-body {
-  font-family: Georgia, serif; }
-  body h1 {
-    font-family: Arial, sans-serif;
-    font-weight: 900; }
+#mapwrap {
+  max-width: 600px;
+  margin: 0 auto; }
+
+#mapid {
+  height: auto;
+  max-height: 400px;
+  padding-top: 54.25%; }
 
 /*# sourceMappingURL=styles.css.map */

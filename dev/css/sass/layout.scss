@@ -1,6 +1,19 @@
 #wrapper{
   margin: 0 auto;
+  max-width: 600px;
+  padding: 10px;
+
   .flexy{
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+
+    .flexy-item{
+      flex: 1 0 250px;
+      border: 1px solid black;
+      margin: 5px;
+      padding: 5px;
+    }
   }
 }

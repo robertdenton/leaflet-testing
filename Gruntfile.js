@@ -1,16 +1,4 @@
-module.exports = function(grunt) {
-
-  // Other
-  grunt.loadNpmTasks('grunt-env');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  // Sass
-  grunt.loadNpmTasks('grunt-sass');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  // JS
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  // HTML
-  grunt.loadNpmTasks('grunt-preprocess');
+module.exports = function(grunt){
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -18,10 +6,10 @@ module.exports = function(grunt) {
     // Set up env
     env: {
       dev: {
-        NODE_ENV: 'DEVELOPMENT'
+        NODE_ENV: 'DEV'
       },
       prod: {
-        NODE_ENV: 'PRODUCTION'
+        NODE_ENV: 'PRO'
       }
     },
 
@@ -43,6 +31,12 @@ module.exports = function(grunt) {
         src: 'dev/js/scripts/*.js',
         dest: 'dev/js/scripts.js'
       }
+    },
+
+    // JSHint
+    jshint: {
+      dev: ['dev/js/scripts/cards.js','dev/js/scripts/map.js']
+      //prod: 'dist/js/scripts.min.js'
     },
 
     // Preprocess HTML
@@ -78,13 +72,31 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: 'dev/*/*/*',
-        tasks: ['sass','concat','preprocess']
+        tasks: ['env:dev','sass','concat','preprocess:dev']
       }
     }
 
   });
 
-  grunt.registerTask('dev', ['env:dev','sass','concat','preprocess:dev'] );
-  grunt.registerTask('default', ['env:prod','sass','concat','preprocess:prod','cssmin','uglify'] );
+  //
+  // Load packages
+  // Sass
+  grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  // JS
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  // HTML
+  grunt.loadNpmTasks('grunt-preprocess');
+  // Other
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-env');
+
+  //
+  // Set up tasks
+  grunt.registerTask('default', [] );
+  grunt.registerTask('dev', ['env:dev','jshint:dev','sass','concat','preprocess:dev'] );
+  grunt.registerTask('prod', ['env:prod','sass','concat','preprocess:prod','cssmin','uglify'] );
 
 };

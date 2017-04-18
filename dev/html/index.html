@@ -1,26 +1,31 @@
+<html>
 <head>
 	<title>Leaflet</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-	<!-- @if NODE_ENV='DEVELOPMENT' -->
+	<!-- @if NODE_ENV='DEV' -->
 	<link rel="stylesheet" href="css/styles.css">
 	<!-- @endif -->
-	<!-- @if NODE_ENV='PRODUCTION' -->
+
+	<!-- @if NODE_ENV='PRO' -->
 	<link rel="stylesheet" href="css/styles.min.css">
 	<!-- @endif -->
 </head>
 <body>
-	
-	<h1>Getting started with Leaflet</h1>
-	
-	<p><!-- @include map.html --></p>
-	
-	<p><!-- @include text.html --></p>
-	
-	<!-- @if NODE_ENV='DEVELOPMENT' -->
-	<script src="js/scripts.js">
+	<div id="wrapper">
+		<h1>Getting started with Leaflet</h1>
+
+		<p><!-- @include map.html --></p>
+
+		<p><!-- @include cards.html --></p>
+	</div>
+
+	<!-- @if NODE_ENV='DEV' -->
+	<script src="js/scripts.js"></script>
 	<!-- @endif -->
-	<!-- @if NODE_ENV='PRODUCTION' -->
-	<script src="js/scripts.min.js">
+
+	<!-- @if NODE_ENV='PRO' -->
+	<script src="js/scripts.min.js"></script>
 	<!-- @endif -->
-	
+
 </body>
+</html>
