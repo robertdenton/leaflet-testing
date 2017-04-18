@@ -1,0 +1,26 @@
+<head>
+	<title>Leaflet</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+	<!-- @if NODE_ENV='DEVELOPMENT' -->
+	<link rel="stylesheet" href="css/styles.css">
+	<!-- @endif -->
+	<!-- @if NODE_ENV='PRODUCTION' -->
+	<link rel="stylesheet" href="css/styles.min.css">
+	<!-- @endif -->
+</head>
+<body>
+	
+	<h1>Getting started with Leaflet</h1>
+	
+	<p><!-- @include map.html --></p>
+	
+	<p><!-- @include text.html --></p>
+	
+	<!-- @if NODE_ENV='DEVELOPMENT' -->
+	<script src="js/scripts.js">
+	<!-- @endif -->
+	<!-- @if NODE_ENV='PRODUCTION' -->
+	<script src="js/scripts.min.js">
+	<!-- @endif -->
+	
+</body>

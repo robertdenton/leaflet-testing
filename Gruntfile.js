@@ -1,48 +1,90 @@
 module.exports = function(grunt) {
 
-	// Project configuration.
-	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
-		now: grunt.template.today('yyyymmdd'),
-		ver: 1,
-		/* WATCH */
-		watch: {
-			tmpl: {
-				files: [
-					'./build/*'
-				],
-				tasks: ['dev']
-			}
-		},
-		/* JSHINT */
-		jshinta: {
-			
-		},
-		uglify: {
-			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-			},
-			build: {
-				src: 'src/<%= pkg.name %>.js',
-				dest: 'build/<%= pkg.name %>.min.js'
-			}
-		}
-	});
+  // Other
+  grunt.loadNpmTasks('grunt-env');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  // Sass
+  grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  // JS
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  // HTML
+  grunt.loadNpmTasks('grunt-preprocess');
 
-	// Load the plugin that provides the "uglify" task.
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-nodeunit');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-env');
-	grunt.loadNpmTasks('grunt-preprocess');
-	grunt.loadNpmTasks('leaflet');
-	grunt.loadNpmTasks('leaflet-omnivore');
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
 
-	grunt.registerTask('dev', 
-	// Default task(s).
-	grunt.registerTask('default', ['uglify']);
+    // Set up env
+    env: {
+      dev: {
+        NODE_ENV: 'DEVELOPMENT'
+      },
+      prod: {
+        NODE_ENV: 'PRODUCTION'
+      }
+    },
+
+    // So sassy...
+    sass: {
+      options: {
+        sourceMap: true
+      },
+      dist: {
+        files: {
+          'dev/css/styles.css': 'dev/css/sass/main.scss'
+        }
+      }
+    },
+
+    // Concat build files
+    concat: {
+      js: {
+        src: 'dev/js/scripts/*.js',
+        dest: 'dev/js/scripts.js'
+      }
+    },
+
+    // Preprocess HTML
+    preprocess: {
+      dev: {
+        src: 'dev/html/index.html',
+        dest: 'dev/index.html'
+      },
+      prod: {
+        src: 'dev/index.html',
+        dest: 'dist/index.html'
+      }
+    },
+
+    // Minify css
+    cssmin: {
+      target:{
+        files: {
+          'dist/css/styles.min.css': 'dev/css/styles.css'
+        }
+      }
+    },
+
+    // Uglify JS
+    uglify: {
+      build: {
+        src: 'dev/js/scripts.js',
+        dest: 'dist/js/scripts.min.js'
+      }
+    },
+
+    // Watch it...
+    watch: {
+      scripts: {
+        files: 'dev/*/*/*',
+        tasks: ['sass','concat','preprocess']
+      }
+    }
+
+  });
+
+  grunt.registerTask('dev', ['env:dev','sass','concat','preprocess:dev'] );
+  grunt.registerTask('default', ['env:prod','sass','concat','preprocess:prod','cssmin','uglify'] );
 
 };
