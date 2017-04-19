@@ -2401,14 +2401,14 @@ function addCard(id,status,name,address){
   //console.log(cards);
 }
 
-var map = L.map('mapid').setView([44.053489, -123.085817], 11);
+var map = L.map('mapid').setView([39.747995, -104.995826], 3);
 
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 18,
 	attribution: 'Map data © <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>'
 }).addTo(map);
 
-omnivore.csv('data/pot.csv')
+omnivore.csv('data/airports.csv')
 .on('ready', function(layer) {
   //console.log(this);
 	// layer.target = this
@@ -2416,19 +2416,19 @@ omnivore.csv('data/pot.csv')
 
 	this.eachLayer(function(marker) {
 
-    var mID = marker.toGeoJSON().properties.ID;
-    var mStatus = marker.toGeoJSON().properties.Status;
-    var mBName = marker.toGeoJSON().properties.BusinessName;
-    var mAddress = marker.toGeoJSON().properties.LocationAddress;
+    var mID = marker.toGeoJSON().properties.iata;
+    var mTitle = marker.toGeoJSON().properties.title;
+    var mCity = marker.toGeoJSON().properties.city;
+    var mState = marker.toGeoJSON().properties.state;
 
 		//console.log(marker);
 		//console.log(this);
-    addCard(mID,mStatus,mBName,mAddress);
+    addCard(mID,mTitle,mCity,mState);
 
 
 		//L.circleMarker(marker.getLatLng(), {"radius":20}).addTo(map);
     //console.log(marker.toGeoJSON().properties.Status);
-		if (mStatus === 'Active') {
+		if (mState === 'CA') {
 			// The argument to L.mapbox.marker.icon is based on the
 			// simplestyle-spec: see that specification for a full
 			// description of options.
@@ -2474,7 +2474,7 @@ omnivore.csv('data/pot.csv')
 				}));
 		}
 		// Bind a popup to each icon based on the same properties
-		marker.bindTooltip(mBName);
+		marker.bindTooltip(mTitle);
     //console.log(mID);
     marker.on('click', function(){
       console.log(mID);
